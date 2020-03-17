@@ -26,7 +26,8 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = set()
+        if vertex_id not in self.vertices:
+            self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
@@ -61,7 +62,9 @@ def earliest_ancestor(ancestors, starting_node):
     # enqueue the starting node since we want the longest path
     queue.enqueue([starting_node])
 
-    longest_path_length = 0
+    # create variables that keep track of longest path and earliest ancestor
+    longest_path_length = 1
+    earliest_ancestor = -1
 
     # while the queue isnt empty, dequeue the next path
     while queue.size() > 0:
@@ -69,8 +72,21 @@ def earliest_ancestor(ancestors, starting_node):
         # current person is the last thing in the path
         current_node = path[-1]
 
+        # if length of path is equal to longest_path_length...
+        if len(path) >= longest_path_length:
+            # and if our current node is less than the earliest ancestor...
+            if current_node < earliest_ancestor:
+                # we need to update the longest path length
+                longest_path_length = len(path)
+                # and update the earliest ancestor
+                earliest_ancestor = current_node
+
+        # however, if our path is longer than the longest_path_length...
         if len(path) > longest_path_length:
+            # update longest_path_length to track it
             longest_path_length = len(path)
+            # update earliest ancestor to track it
+            earliest_ancestor = current_node
 
         # using bfs, set neighbors equal to the current node set
         neighbors = graph.vertices[current_node]
@@ -82,3 +98,6 @@ def earliest_ancestor(ancestors, starting_node):
             path_copy.append(ancestor)
             # enqueue the copied path
             queue.enqueue(path_copy)
+
+    # return last element of array with longest path
+    return earliest_ancestor
