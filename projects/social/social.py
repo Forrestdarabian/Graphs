@@ -1,6 +1,24 @@
+class Queue:
+    def __init__(self):
+        self.storage = []
+
+    def enqueue(self, value):
+        self.storage.append(value)
+
+    def dequeue(self):
+        if (self.size()) > 0:
+            return self.storage.pop(0)
+        else:
+            return None
+
+    def size(self):
+        return len(self.storage)
+
+
 class User:
     def __init__(self, name):
         self.name = name
+
 
 class SocialGraph:
     def __init__(self):
@@ -46,7 +64,22 @@ class SocialGraph:
 
         # Add users
 
+        # create a for loop
+        for i in range(0, num_users):
+            # add user to graph
+            self.add_user(F"User {i}")
+
         # Create friendships
+
+        # create a list of all possible friendships
+        all_possible_friendships = []
+
+        # create another for loop to loop over userID
+        for userID in self.users:
+            # then loop over friendID from userID + 1 to the lastID + 1
+            for friendID in range(userID + 1, self.lastID + 1):
+                # append tuple of (userID, friendID) to all possible friendships list
+                all_possible_friendships.append((userID, friendID))
 
     def get_all_social_paths(self, user_id):
         """
