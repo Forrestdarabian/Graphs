@@ -1,3 +1,6 @@
+import random
+
+
 class Queue:
     def __init__(self):
         self.storage = []
@@ -65,9 +68,9 @@ class SocialGraph:
         # Add users
 
         # create a for loop
-        for i in range(0, num_users):
+        for i in range(num_users):
             # add user to graph
-            self.add_user(F"User {i}")
+            self.add_user(f"User {i+1}")
 
         # Create friendships
 
@@ -75,11 +78,20 @@ class SocialGraph:
         all_possible_friendships = []
 
         # create another for loop to loop over userID
-        for userID in self.users:
+        for user_id in self.users:
             # then loop over friendID from userID + 1 to the lastID + 1
-            for friendID in range(userID + 1, self.lastID + 1):
+            for friend_id in range(user_id + 1, self.last_id + 1):
                 # append tuple of (userID, friendID) to all possible friendships list
-                all_possible_friendships.append((userID, friendID))
+                all_possible_friendships.append((user_id, friend_id))
+
+        random.shuffle(all_possible_friendships)
+
+        # create n friendships where n = avg_friendships = num_users // 2
+        for i in range(num_users * avg_friendships // 2):
+            friendship = all_possible_friendships[i]
+            self.add_friendship(friendship[0], friendship[1])
+
+        print(all_possible_friendships)
 
     def get_all_social_paths(self, user_id):
         """
