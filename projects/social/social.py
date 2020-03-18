@@ -116,6 +116,23 @@ class SocialGraph:
             # set new user id to the last item in path
             new_user_id = path[-1]
 
+            # check if the new user id isnt in the visited structure
+            if new_user_id not in visited:
+                # set the new user ids path in visited
+                visited[new_user_id] = path
+
+                # loop over each friend id in the friendships at the index of new user id
+                for friend_id in self.friendships[new_user_id]:
+                    # check that the friend id is not in visited
+                    if friend_id not in visited:
+                        # create a copy of the path
+                        new_path = list(path)
+                        # append the friend id to the copy of the path
+                        new_path.append(friend_id)
+                        # enqueue the copy of the path
+                        queue.enqueue(new_path)
+
+        # return the visited data structure
         return visited
 
 
