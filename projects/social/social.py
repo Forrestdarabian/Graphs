@@ -104,6 +104,18 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        # create a queue
+        queue = Queue()
+        # enqueue user id as a list
+        queue.enqueue([user_id])
+
+        # while queue isnt empty
+        while queue.size() > 0:
+            # dequeue to path variable
+            path = queue.dequeue()
+            # set new user id to the last item in path
+            new_user_id = path[-1]
+
         return visited
 
 
